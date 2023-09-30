@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-
-class Profile {
-  String name;
-  String avatarUrl;
-
-  Profile({required this.name, required this.avatarUrl});
-}
+import 'package:profile_repository/profile_repository.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProfileAppBar({super.key, required this.profile});
@@ -14,9 +9,10 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-              color: Colors.grey[850],
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
+          color: Colors.grey[850],
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15))),
       child: Row(
         children: [
           Padding(
@@ -27,7 +23,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Padding(
             padding: EdgeInsets.all(8),
-            child: Text(profile.name,
+            child: Text(profile.username,
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
@@ -37,7 +33,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(150);

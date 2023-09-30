@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psn_time_tracker/pages/trophy_list/widgets/trophy_row.dart';
-
-class Trophy {
-  String name;
-  String iconUrl;
-  String description;
-  bool earned;
-
-  Trophy({required this.name, required this.description, required this.iconUrl, required this.earned});
-}
+import 'package:trophies_repository/trophies_repository.dart';
 
 class TrophyList extends StatelessWidget {
   const TrophyList({super.key, required this.trophies});

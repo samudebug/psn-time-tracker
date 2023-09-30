@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:games_repository/games_repository.dart';
 
-class Game {
-  String title;
-  String playTime;
-  String imageUrl;
-
-  Game({required this.title, required this.playTime, required this.imageUrl});
-}
 
 class GameCard extends StatelessWidget {
   const GameCard({super.key, required this.game});
@@ -48,7 +42,7 @@ class GameCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                    Expanded(child: Text(game.title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white), overflow: TextOverflow.ellipsis,)),
+                    Expanded(child: Text(game.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white), overflow: TextOverflow.ellipsis,)),
                     Expanded(child: Text(game.playTime, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white), overflow: TextOverflow.ellipsis, textAlign: TextAlign.end,), )
                   ]),
                 ),)

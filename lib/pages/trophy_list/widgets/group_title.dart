@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:games_repository/games_repository.dart';
-import 'package:psn_time_tracker/pages/games/widgets/game_card.dart';
+import 'package:trophies_repository/trophies_repository.dart';
 
-class GameTitle extends StatelessWidget {
-  const GameTitle({super.key, required this.game});
-  final Game game;
+class GroupTitle extends StatelessWidget {
+  const GroupTitle({super.key, required this.group});
+  final TrophyGroup group;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +14,7 @@ class GameTitle extends StatelessWidget {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image(
-                image: NetworkImage(game.imageUrl),
+                image: NetworkImage(group.iconUrl),
                 height: 80,
               )),
         ),
@@ -23,7 +22,7 @@ class GameTitle extends StatelessWidget {
           child: Padding(
               padding: EdgeInsets.all(8),
               child: Text(
-                game.name,
+                group.name,
                 softWrap: true,
                 style: Theme.of(context)
                     .textTheme
