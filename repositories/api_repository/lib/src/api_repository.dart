@@ -6,7 +6,7 @@ class APIError implements Exception {
 }
 
 class APIRepository {
-  APIRepository() : dio = Dio(BaseOptions(baseUrl: "http://10.0.2.2:3000"));
+  APIRepository() : dio = Dio(BaseOptions(baseUrl: "https://psn-time-tracker-api.onrender.com"));
   final Dio dio;
   Future<dynamic> performGet(String url, Map<String, dynamic> params) async {
     try {
