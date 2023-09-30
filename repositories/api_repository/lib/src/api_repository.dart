@@ -11,7 +11,6 @@ class APIRepository {
   Future<dynamic> performGet(String url, Map<String, dynamic> params) async {
     try {
       final response = await dio.get(url, queryParameters: params);
-      print("response ${response.data}");
       return response.data;
     } catch (e) {
       print(e);

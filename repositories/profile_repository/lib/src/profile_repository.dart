@@ -4,8 +4,8 @@ class ProfileRepository {
   ProfileRepository({required this.apiRepository});
   final APIRepository apiRepository;
 
-  Future<Profile> getProfile() async {
-    Map<String, dynamic> data = await this.apiRepository.performGet('/get_own_info', {'token': '7RKddfBJ1xU8USlcUwJSkFalvXP9nRCRu1A3ytXLvorqGxy22Cb7cpVpOuqmk34i', 'language': 'pt-br'});
+  Future<Profile> getProfile(String token) async {
+    Map<String, dynamic> data = await this.apiRepository.performGet('/get_own_info', {'token': token, 'language': 'pt-br'});
     return Profile.fromJson(data);
   }
 }

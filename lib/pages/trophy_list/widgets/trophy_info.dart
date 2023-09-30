@@ -30,35 +30,67 @@ class TrophyInfo extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text("Bronze: $bronzeTrophies",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.white)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.brown[600]),),
+                    ),
+                    Text("Bronze: $bronzeTrophies",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white)),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text("Prata: $silverTrophies",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.white)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.blueGrey[200]),),
+                    ),
+                    Text("Prata: $silverTrophies",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white)),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text("Ouro: $goldTrophies",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.white)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.yellow[600]),),
+                    ),
+                    Text("Ouro: $goldTrophies",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white)),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text("Platina: $platinumTrophies",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.white)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(width: 10, height: 10, decoration: BoxDecoration(color: Colors.grey[600]),),
+                    ),
+                    Text("Platina: $platinumTrophies",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white)),
+                  ],
+                ),
               )
             ],
           ),

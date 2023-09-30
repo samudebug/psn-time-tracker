@@ -49,6 +49,8 @@ dependencies:
     path: ./repositories/games_repository
   trophies_repository:
     path: ./repositories/trophies_repository
+  auth_repository:
+    path: ./repositories/auth_repository
 
 dev_dependencies:
   flutter_test:

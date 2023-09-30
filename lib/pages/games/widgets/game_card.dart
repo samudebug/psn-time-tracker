@@ -12,8 +12,8 @@ class GameCard extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Container(
        decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(5), topRight: Radius.circular(5))),
+              borderRadius: BorderRadius.all(
+                  Radius.circular(5))),
         child: Card(
           child: SizedBox(
             height: 250,
@@ -23,8 +23,10 @@ class GameCard extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                         image: DecorationImage(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
                       image: NetworkImage(game.imageUrl),
                     )),
                   ),

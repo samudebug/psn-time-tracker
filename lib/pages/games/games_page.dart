@@ -1,4 +1,6 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_repository/games_repository.dart';
 import 'package:profile_repository/profile_repository.dart';
@@ -22,6 +24,9 @@ class GamesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ProfileBloc>().add(LoadProfile());
     context.read<GamesBloc>().add(LoadGames());
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  statusBarColor: Colors.grey[850]
+));
     return SafeArea(
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
@@ -39,20 +44,7 @@ class GamesPage extends StatelessWidget {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (routeContext) =>
-                                        RepositoryProvider(
-                                          create: (_) => context
-                                              .read<TrophiesRepository>(),
-                                          child: MultiBlocProvider(
-                                            providers: [BlocProvider(create: (_) => TrophyGroupsBloc(
-                                                trophiesRepository:
-                                                    context.read<
-                                                        TrophiesRepository>())),
-                                                        BlocProvider(create: (_) => TrophiesBloc(trophiesRepository: context.read<
-                                                        TrophiesRepository>()))],
-                                            child:
-                                                TrophyGroupListPage(game: game),
-                                          ),
-                                        )));
+                                        TrophyGroupListPage(game: game)));
                               },
                               child: GameCard(game: game),
                             );
