@@ -1,16 +1,28 @@
-# psn_time_tracker
+# PSN Time Tracker
 
-A new Flutter project.
+App to view your registered game time for PS4 and PS5 games.
 
-## Getting Started
+Since around 2017, PSN tracks your game times for your games. You can only see this information in 3 ways:
+- Using Parental Control settings
+- If it's a recent game, you can see on the PS App
+- On a PS5
 
-This project is a starting point for a Flutter application.
+Because of that, I made an app that pulls that data from the PSN API using a transformer that I made. [You can check it here.](https://github.com/samudebug/psn-time-tracker-api).
 
-A few resources to get you started if this is your first Flutter project:
+I've used Fluter to build the app with the BLoC architeture.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Screenshots:
+![Screenshot_1696097906](https://github.com/samudebug/psn-time-tracker/assets/34324655/9609d674-8d80-46c9-a9fb-1828ffb046f7)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_1696181305](https://github.com/samudebug/psn-time-tracker/assets/34324655/559480e1-5a75-4571-aa3c-23d3730034f3)
+
+![Screenshot_1696181313](https://github.com/samudebug/psn-time-tracker/assets/34324655/70276dcc-8112-44a6-97ad-45dd2cfe14fb)
+
+Packages used:
+- [Dio](https://github.com/cfug/dio)
+- [Flutter Secure Storage](https://github.com/mogol/flutter_secure_storage)
+- [Percent Indicator](https://github.com/diegoveloper/flutter_percent_indicator)
+- [Flutter BLoC](https://github.com/felangel/bloc/tree/master/packages/flutter_bloc)
+- [Equatable](https://github.com/felangel/equatable)
+- [Flutter Shimmer](https://github.com/hnvn/flutter_shimmer)
+- [WebView Flutter Plus](https://github.com/shah-xad/webview_flutter_plus)
