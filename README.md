@@ -7,7 +7,7 @@ Since around 2017, PSN tracks your game times for your games. You can only see t
 - If it's a recent game, you can see on the PS App
 - On a PS5
 
-Because of that, I made an app that pulls that data from the PSN API using a transformer that I made. [You can check it here.](https://github.com/samudebug/psn-time-tracker-api).
+Because of that, I made an app that pulls that data from the PSN API using a transformer that I made. [You can check it here](https://github.com/samudebug/psn-time-tracker-api).
 
 I've used Fluter to build the app with the BLoC architeture.
 
