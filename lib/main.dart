@@ -40,8 +40,6 @@ class MyApp extends StatelessWidget {
       ],child: MultiBlocProvider(providers: [
         BlocProvider(create: (context) => ProfileBloc(profileRepository: context.read<ProfileRepository>(), authRepository: context.read<AuthRepository>())),
         BlocProvider(create: (context) => GamesBloc(gamesRepository: context.read<GamesRepository>())),
-        BlocProvider(create: (context) => TrophyGroupsBloc(trophiesRepository: context.read<TrophiesRepository>(),  authRepository: context.read<AuthRepository>())),
-        BlocProvider(create: (context) => TrophiesBloc(trophiesRepository: context.read<TrophiesRepository>(),  authRepository: context.read<AuthRepository>()))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

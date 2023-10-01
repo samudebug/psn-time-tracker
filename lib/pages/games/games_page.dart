@@ -13,8 +13,8 @@ import 'package:psn_time_tracker/pages/games/widgets/profile_appbar.dart';
 import 'package:psn_time_tracker/pages/trophy_list/trophy_group_list_page.dart';
 import 'package:psn_time_tracker/pages/trophy_list/trophy_list_page.dart';
 import 'package:psn_time_tracker/pages/trophy_list/widgets/trophy_group_list.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:trophies_repository/trophies_repository.dart';
 
 class GamesPage extends StatelessWidget {
@@ -24,41 +24,48 @@ class GamesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ProfileBloc>().add(LoadProfile());
     context.read<GamesBloc>().add(LoadGames());
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  statusBarColor: Colors.grey[850]
-));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.grey[850]));
     return SafeArea(
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if (state is ProfileReady) {
-            return Scaffold(
-                appBar: ProfileAppBar(profile: state.profile),
-                body: BlocBuilder<GamesBloc, GamesState>(
-                  builder: (context, gamesState) {
-                    if (gamesState is GamesReady) {
-                      return ListView.builder(
-                          itemCount: gamesState.games.length,
-                          itemBuilder: ((context, index) {
-                            final Game game = gamesState.games[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (routeContext) =>
-                                        TrophyGroupListPage(game: game)));
-                              },
-                              child: GameCard(game: game),
-                            );
-                          }));
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                ));
-          }
           return Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+              appBar: state is ProfileReady
+                  ? ProfileAppBar(profile: (state as ProfileReady).profile)
+                  : (ProfileAppBarLoading() as PreferredSizeWidget),
+              body: BlocBuilder<GamesBloc, GamesState>(
+                builder: (context, gamesState) {
+                  return AnimatedSwitcher(key: Key("normal"), duration: Duration(milliseconds: 300), child: gamesState is GamesReady ? AnimatedList(
+                        initialItemCount: gamesState.games.length,
+                        itemBuilder: ((context, index, animation) {
+                          final Game game = gamesState.games[index];
+                          return FadeTransition(opacity: animation, child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (routeContext) =>
+                                      TrophyGroupListPage(game: game)));
+                            },
+                            child: GameCard(game: game),
+                          ),);
+                        })) : Shimmer.fromColors(
+                          key: Key("loading"),
+                      child: ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: ((context, index) => Container(
+                                width: double.infinity,
+                                height: 250.0,
+                                margin: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: Colors.white,
+                                ),
+                              ))),
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      enabled: true,
+                    ),);
+                },
+              ));
         },
       ),
     );

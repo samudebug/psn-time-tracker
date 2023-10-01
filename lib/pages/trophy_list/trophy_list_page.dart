@@ -1,3 +1,4 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:games_repository/games_repository.dart';
@@ -18,29 +19,34 @@ class TrophyListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<TrophiesBloc>().add(LoadTrophies(game.titleId, group.groupId));
-    return SafeArea(
-        child: Scaffold(
-      appBar: TrophyListPageAppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GroupTitle(group: group),
-          BlocBuilder<TrophiesBloc, TrophiesState>(builder: (context, state) {
-            if (state is TrophiesReady) {
-              return TrophyInfo(trophies: state.trophies);
-            }
-            return Container();
-          },),
-          // Expanded(child: TrophyList(trophies: trophies))
-          BlocBuilder<TrophiesBloc, TrophiesState>(builder: ((context, state) {
-            if (state is TrophiesReady) {
-              return Expanded(child: TrophyList(trophies: state.trophies));
-            }
-            return Center(child: CircularProgressIndicator(),);
-          }))
-        ],
-      ),
-    ));
+    return BlocProvider(
+      create: (context) => TrophiesBloc(trophiesRepository: context.read<TrophiesRepository>(), authRepository: context.read<AuthRepository>()),
+      child: SafeArea(
+          child: Scaffold(
+        appBar: TrophyListPageAppBar(),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            GroupTitle(group: group),
+            BlocBuilder<TrophiesBloc, TrophiesState>(builder: (context, state) {
+              if (state is TrophiesInitial) {
+                context.read<TrophiesBloc>().add(LoadTrophies(game.titleId, group.groupId));
+              }
+              if (state is TrophiesReady) {
+                return TrophyInfo(trophies: state.trophies);
+              }
+              return Container();
+            },),
+            // Expanded(child: TrophyList(trophies: trophies))
+            BlocBuilder<TrophiesBloc, TrophiesState>(builder: ((context, state) {
+              if (state is TrophiesReady) {
+                return Expanded(child: TrophyList(trophies: state.trophies));
+              }
+              return Center(child: CircularProgressIndicator(),);
+            }))
+          ],
+        ),
+      )),
+    );
   }
 }

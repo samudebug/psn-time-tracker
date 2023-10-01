@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:games_repository/games_repository.dart';
+import 'package:shimmer/shimmer.dart';
 
 
 class GameCard extends StatelessWidget {
@@ -54,5 +55,16 @@ class GameCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class GameCardLoading extends StatelessWidget {
+  const GameCardLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                  Radius.circular(5))), height: 250, width: 250,);
   }
 }
