@@ -31,56 +31,128 @@ class TrophyGroupListPage extends StatelessWidget {
       child: SafeArea(
           child: Scaffold(
         appBar: TrophyListPageAppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            GameTitle(game: game),
-            BlocBuilder<TrophiesBloc, TrophiesState>(
-              builder: (context, state) {
-                if (state is TrophiesReady) {
-                  return TrophyInfo(trophies: state.trophies);
-                }
-                return Container();
-              },
-            ),
-            // Expanded(child: TrophyList(trophies: trophies))
-            BlocBuilder<TrophyGroupsBloc, TrophyGroupsStates>(
-                builder: (context, state) {
-              if (state is TrophyGroupsInitial) {
-                context
-                    .read<TrophyGroupsBloc>()
-                    .add(LoadTrophyGroups(titleId: game.titleId));
-              }
-              if (state is TrophyGroupsReady) {
-                if (state.trophyGroups.length == 1) {
-                  context.read<TrophiesBloc>().add(LoadTrophies(
-                      game.titleId, state.trophyGroups[0].groupId));
-                  return BlocBuilder<TrophiesBloc, TrophiesState>(
-                      builder: (context, trophiesState) {
-                    if (trophiesState is TrophiesReady) {
-                      return Expanded(
-                          child: TrophyList(trophies: trophiesState.trophies));
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  });
-                }
-                context.read<TrophiesBloc>().emit(TrophiesInitial());
-                return Expanded(
-                  child: TrophyGroupList(
-                    groups: state.trophyGroups,
-                    game: game,
-                  ),
-                );
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            })
-          ],
+        body: OrientationBuilder(
+          builder: (context, orientation) => orientation == Orientation.portrait
+              ? _buildPortrait()
+              : _buildLandscape(),
         ),
       )),
+    );
+  }
+
+  Row _buildLandscape() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                GameTitle(game: game),
+                BlocBuilder<TrophiesBloc, TrophiesState>(
+                  builder: (context, state) {
+                    if (state is TrophiesReady) {
+                      return TrophyInfo(trophies: state.trophies);
+                    }
+                    return Container();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        BlocBuilder<TrophyGroupsBloc, TrophyGroupsStates>(
+            builder: (context, state) {
+          if (state is TrophyGroupsInitial) {
+            context
+                .read<TrophyGroupsBloc>()
+                .add(LoadTrophyGroups(titleId: game.titleId));
+          }
+          if (state is TrophyGroupsReady) {
+            if (state.trophyGroups.length == 1) {
+              context.read<TrophiesBloc>().add(
+                  LoadTrophies(game.titleId, state.trophyGroups[0].groupId));
+              return BlocBuilder<TrophiesBloc, TrophiesState>(
+                  builder: (context, trophiesState) {
+                if (trophiesState is TrophiesReady) {
+                  return Expanded(
+                      child: TrophyList(trophies: trophiesState.trophies));
+                }
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              });
+            }
+            context.read<TrophiesBloc>().emit(TrophiesInitial());
+            return Expanded(
+              child: TrophyGroupList(
+                groups: state.trophyGroups,
+                game: game,
+              ),
+            );
+          }
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        })
+      ],
+    );
+  }
+
+  Column _buildPortrait() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        GameTitle(game: game),
+        BlocBuilder<TrophiesBloc, TrophiesState>(
+          builder: (context, state) {
+            if (state is TrophiesReady) {
+              return TrophyInfo(trophies: state.trophies);
+            }
+            return Container();
+          },
+        ),
+        // Expanded(child: TrophyList(trophies: trophies))
+        BlocBuilder<TrophyGroupsBloc, TrophyGroupsStates>(
+            builder: (context, state) {
+          if (state is TrophyGroupsInitial) {
+            context
+                .read<TrophyGroupsBloc>()
+                .add(LoadTrophyGroups(titleId: game.titleId));
+          }
+          if (state is TrophyGroupsReady) {
+            if (state.trophyGroups.length == 1) {
+              context.read<TrophiesBloc>().add(
+                  LoadTrophies(game.titleId, state.trophyGroups[0].groupId));
+              return BlocBuilder<TrophiesBloc, TrophiesState>(
+                  builder: (context, trophiesState) {
+                if (trophiesState is TrophiesReady) {
+                  return Expanded(
+                      child: TrophyList(trophies: trophiesState.trophies));
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              });
+            }
+            context.read<TrophiesBloc>().emit(TrophiesInitial());
+            return Expanded(
+              child: TrophyGroupList(
+                groups: state.trophyGroups,
+                game: game,
+              ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        })
+      ],
     );
   }
 }

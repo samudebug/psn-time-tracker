@@ -24,29 +24,66 @@ class TrophyListPage extends StatelessWidget {
       child: SafeArea(
           child: Scaffold(
         appBar: TrophyListPageAppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            GroupTitle(group: group),
-            BlocBuilder<TrophiesBloc, TrophiesState>(builder: (context, state) {
-              if (state is TrophiesInitial) {
-                context.read<TrophiesBloc>().add(LoadTrophies(game.titleId, group.groupId));
-              }
-              if (state is TrophiesReady) {
-                return TrophyInfo(trophies: state.trophies);
-              }
-              return Container();
-            },),
-            // Expanded(child: TrophyList(trophies: trophies))
-            BlocBuilder<TrophiesBloc, TrophiesState>(builder: ((context, state) {
-              if (state is TrophiesReady) {
-                return Expanded(child: TrophyList(trophies: state.trophies));
-              }
-              return Center(child: CircularProgressIndicator(),);
-            }))
-          ],
-        ),
+        body: OrientationBuilder(builder: (context, orientation) => orientation == Orientation.portrait ? _buildPortrait() : _buildLandscape(),),
       )),
     );
+  }
+
+  Row _buildLandscape() {
+    return Row(crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              GroupTitle(group: group),
+              BlocBuilder<TrophiesBloc, TrophiesState>(builder: (context, state) {
+                if (state is TrophiesInitial) {
+                  context.read<TrophiesBloc>().add(LoadTrophies(game.titleId, group.groupId));
+                }
+                if (state is TrophiesReady) {
+                  return TrophyInfo(trophies: state.trophies);
+                }
+                return Container();
+              },),
+            ],
+          ),
+        ),
+      ),
+       BlocBuilder<TrophiesBloc, TrophiesState>(builder: ((context, state) {
+            if (state is TrophiesReady) {
+              return Expanded(child: TrophyList(trophies: state.trophies));
+            }
+            return Expanded(child: Center(child: CircularProgressIndicator(),));
+          }))
+    ],
+    );
+  }
+
+  Column _buildPortrait() {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          GroupTitle(group: group),
+          BlocBuilder<TrophiesBloc, TrophiesState>(builder: (context, state) {
+            if (state is TrophiesInitial) {
+              context.read<TrophiesBloc>().add(LoadTrophies(game.titleId, group.groupId));
+            }
+            if (state is TrophiesReady) {
+              return TrophyInfo(trophies: state.trophies);
+            }
+            return Container();
+          },),
+          // Expanded(child: TrophyList(trophies: trophies))
+          BlocBuilder<TrophiesBloc, TrophiesState>(builder: ((context, state) {
+            if (state is TrophiesReady) {
+              return Expanded(child: TrophyList(trophies: state.trophies));
+            }
+            return Center(child: CircularProgressIndicator(),);
+          }))
+        ],
+      );
   }
 }

@@ -35,35 +35,51 @@ class GamesPage extends StatelessWidget {
                   : (ProfileAppBarLoading() as PreferredSizeWidget),
               body: BlocBuilder<GamesBloc, GamesState>(
                 builder: (context, gamesState) {
-                  return AnimatedSwitcher(key: Key("normal"), duration: Duration(milliseconds: 300), child: gamesState is GamesReady ? AnimatedList(
-                        initialItemCount: gamesState.games.length,
-                        itemBuilder: ((context, index, animation) {
-                          final Game game = gamesState.games[index];
-                          return FadeTransition(opacity: animation, child: GestureDetector(
-                            onTap: () {
+                  return OrientationBuilder(
+                    builder: (context, orientation) => AnimatedSwitcher(
+                      key: Key("normal"),
+                      duration: Duration(milliseconds: 300),
+                      child: gamesState is GamesReady
+                          ? GridView.builder(
+                              key: Key("loaded"),
+                              itemCount: gamesState.games.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount:
+                                          orientation == Orientation.portrait
+                                              ? 1
+                                              : 4),
+                              itemBuilder: (context, index) {
+                                final Game game = gamesState.games[index];
+                                return GestureDetector(onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (routeContext) =>
                                       TrophyGroupListPage(game: game)));
-                            },
-                            child: GameCard(game: game),
-                          ),);
-                        })) : Shimmer.fromColors(
-                          key: Key("loading"),
-                      child: ListView.builder(
-                          itemCount: 3,
-                          itemBuilder: ((context, index) => Container(
-                                width: double.infinity,
-                                height: 250.0,
-                                margin: const EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  color: Colors.white,
-                                ),
-                              ))),
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade100,
-                      enabled: true,
-                    ),);
+                            },child: GameCard(game: game),);
+                              },
+                            )
+                          : Shimmer.fromColors(
+                              key: Key("loading"),
+                              child: GridView.builder(itemCount: 12,gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount:
+                                          orientation == Orientation.portrait
+                                              ? 1
+                                              : 4), itemBuilder: ((context, index) => Container(
+                                        width: double.infinity,
+                                        height: 250.0,
+                                        margin: const EdgeInsets.all(5.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          color: Colors.white,
+                                        ),
+                                      ))),
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.grey.shade100,
+                              enabled: true,
+                            ),
+                    ),
+                  );
                 },
               ));
         },
