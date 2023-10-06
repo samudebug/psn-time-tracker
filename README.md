@@ -18,6 +18,12 @@ Screenshots:
 
 ![Screenshot_1696181313](https://github.com/samudebug/psn-time-tracker/assets/34324655/70276dcc-8112-44a6-97ad-45dd2cfe14fb)
 
+Now with a better UI for tablets:
+![Screenshot_1696597763](https://github.com/samudebug/psn-time-tracker/assets/34324655/57d623ee-ae68-47a9-a4d9-4b7511cf1d98)
+![Screenshot_1696597815](https://github.com/samudebug/psn-time-tracker/assets/34324655/1b357da2-6301-40d8-be70-8a2a150c02d0)
+![Screenshot_1696597826](https://github.com/samudebug/psn-time-tracker/assets/34324655/b10756b9-9a86-4fa4-a987-8f5b0fb6bd1e)
+
+
 Packages used:
 - [Dio](https://github.com/cfug/dio)
 - [Flutter Secure Storage](https://github.com/mogol/flutter_secure_storage)
