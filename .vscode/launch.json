@@ -1,0 +1,125 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "psn_time_tracker",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "psn_time_tracker (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "psn_time_tracker (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "api_repository",
+            "cwd": "repositories/api_repository",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "api_repository (profile mode)",
+            "cwd": "repositories/api_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "api_repository (release mode)",
+            "cwd": "repositories/api_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "auth_repository",
+            "cwd": "repositories/auth_repository",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "auth_repository (profile mode)",
+            "cwd": "repositories/auth_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "auth_repository (release mode)",
+            "cwd": "repositories/auth_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "games_repository",
+            "cwd": "repositories/games_repository",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "games_repository (profile mode)",
+            "cwd": "repositories/games_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "games_repository (release mode)",
+            "cwd": "repositories/games_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "profile_repository",
+            "cwd": "repositories/profile_repository",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "profile_repository (profile mode)",
+            "cwd": "repositories/profile_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "profile_repository (release mode)",
+            "cwd": "repositories/profile_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "trophies_repository",
+            "cwd": "repositories/trophies_repository",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "trophies_repository (profile mode)",
+            "cwd": "repositories/trophies_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "trophies_repository (release mode)",
+            "cwd": "repositories/trophies_repository",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

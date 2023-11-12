@@ -5,8 +5,8 @@ class GamesRepository {
   GamesRepository({required this.apiRepository});
   final APIRepository apiRepository;
 
-  Future<List<Game>> getGames() async {
-    List<dynamic> data = await apiRepository.performGet('/get_stats',  {'token': '7RKddfBJ1xU8USlcUwJSkFalvXP9nRCRu1A3ytXLvorqGxy22Cb7cpVpOuqmk34i', 'language': 'pt-br'});
+  Future<List<Game>> getGames(String token) async {
+    List<dynamic> data = await apiRepository.performGet('/get_stats',  {'token': token, 'language': 'pt-br'});
     return data.map((e) => Game.fromJson(e)).toList();
   }
 }

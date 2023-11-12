@@ -77,7 +77,7 @@ class TrophyGroupListPage extends StatelessWidget {
                   builder: (context, trophiesState) {
                 if (trophiesState is TrophiesReady) {
                   return Expanded(
-                      child: TrophyList(trophies: trophiesState.trophies));
+                      child: trophiesState.trophies.isEmpty ? Center(child: Text("Nenhum dado para mostrar", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white)),) : TrophyList(trophies: trophiesState.trophies));
                 }
                 return Expanded(
                   child: Center(
@@ -88,10 +88,10 @@ class TrophyGroupListPage extends StatelessWidget {
             }
             context.read<TrophiesBloc>().emit(TrophiesInitial());
             return Expanded(
-              child: TrophyGroupList(
+              child: state.trophyGroups.isEmpty ? Center(child: Text("Nenhum dado para mostrar", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white)),) : TrophyGroupList(
                 groups: state.trophyGroups,
                 game: game,
-              ),
+              )
             );
           }
           return Expanded(

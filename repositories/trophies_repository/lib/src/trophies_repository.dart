@@ -8,6 +8,8 @@ class TrophiesRepository {
 
   Future<List<TrophyGroup>> getTrophyGroups(String titleId, String token) async {
     Map<String, dynamic> data = await apiRepository.performGet("/get_trophy_groups/$titleId", {'token': token, 'language': 'pt-br'});
+    if (data.isEmpty) return [];
+    print("data $data");
     final groups = data['groups'].map<TrophyGroup>((e) => TrophyGroup.fromJson(e) as TrophyGroup).toList();
     return groups;
   }

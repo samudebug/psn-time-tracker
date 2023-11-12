@@ -3,13 +3,7 @@ import 'dart:convert';
 import 'package:api_repository/api_repository.dart';
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:games_repository/games_repository.dart';
-import 'package:profile_repository/profile_repository.dart';
-import 'package:psn_time_tracker/blocs/games_bloc/games_bloc.dart';
-import 'package:psn_time_tracker/blocs/profile_bloc/profile_bloc.dart';
 import 'package:psn_time_tracker/pages/games/games_page.dart';
-import 'package:trophies_repository/trophies_repository.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,8 +14,8 @@ class LoginPage extends StatelessWidget {
   checkToken(BuildContext context) async {
     bool hasToken = await context.read<AuthRepository>().checkToken();
     if (hasToken) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (routeContext) => GamesPage()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (routeContext) => GamesPage()));
     }
   }
 
@@ -30,17 +24,51 @@ class LoginPage extends StatelessWidget {
     return SafeArea(
         child: WebViewPlus(
       javascriptMode: JavascriptMode.unrestricted,
-      onWebViewCreated: (controller) {
-        checkToken(context);
+      onWebViewCreated: (controller) async {
+        await checkToken(context);
         this.controller = controller;
         controller.loadUrl("https://store.playstation.com");
       },
+      onPageStarted: (url) async {
+        if (url != null && url.startsWith("https://store.playstation.com")) {
+          final cookie = await controller.webViewController
+              .runJavascriptReturningResult(
+                  """if (document.cookie.includes("isSignedIn=true;")) {
+                                                  window.location.assign("https://ca.account.sony.com/api/v1/ssocookie");
+                                                }
+                                              document.cookie""");
+          print("Cookie $cookie");
+          if (cookie.contains("isSignedIn=true;")) {
+            controller.loadUrl("https://ca.account.sony.com/api/v1/ssocookie");
+          } else {
+            controller.webViewController.runJavascript(
+                """document.querySelector("[data-qa='web-toolbar#signin-button']").click()""");
+          }
+        }
+      },
       onProgress: (progress) async {
+        final url = await controller.webViewController.currentUrl();
+        if (url != null && url.startsWith("https://store.playstation.com")) {
+          final cookie = await controller.webViewController
+              .runJavascriptReturningResult(
+                  """if (document.cookie.includes("isSignedIn=true;")) {
+                                                  window.location.assign("https://ca.account.sony.com/api/v1/ssocookie");
+                                                }
+                                              document.cookie""");
+          print("Cookie $cookie");
+          if (cookie.contains("isSignedIn=true;")) {
+            controller.loadUrl("https://ca.account.sony.com/api/v1/ssocookie");
+          }
+        }
         if (progress == 100) {
-          final url = await controller.webViewController.currentUrl();
           if (url != null && url.startsWith("https://store.playstation.com")) {
             final cookie = await controller.webViewController
-                .runJavascriptReturningResult("document.cookie");
+                .runJavascriptReturningResult(
+                    """if (document.cookie.includes("isSignedIn=true;")) {
+                                                  window.location.assign("https://ca.account.sony.com/api/v1/ssocookie");
+                                                }
+                                              document.cookie""");
+            print("Cookie $cookie");
             if (cookie.contains("isSignedIn=true;")) {
               controller
                   .loadUrl("https://ca.account.sony.com/api/v1/ssocookie");
@@ -49,14 +77,15 @@ class LoginPage extends StatelessWidget {
                   """document.querySelector("[data-qa='web-toolbar#signin-button']").click()""");
             }
           }
-          if (url != null && url.startsWith("https://ca.account.sony.com")) {
+          if (url != null && url.contains("ssocookie")) {
             final tokenData = await controller.webViewController
                 .runJavascriptReturningResult("document.body.innerText");
-
-            dynamic token = jsonDecode(jsonDecode(tokenData));
+            print("Body $tokenData");
+            print("Body type: ${jsonDecode(tokenData).runtimeType}");
+            dynamic token = jsonDecode(tokenData);
             await context.read<AuthRepository>().saveToken(token['npsso']);
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (routeContext) => GamesPage()));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (routeContext) => GamesPage()));
           }
         }
       },
