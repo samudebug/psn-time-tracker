@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:api_repository/api_repository.dart';
 import 'package:auth_repository/auth_repository.dart';
@@ -80,10 +81,13 @@ class LoginPage extends StatelessWidget {
           if (url != null && url.contains("ssocookie")) {
             final tokenData = await controller.webViewController
                 .runJavascriptReturningResult("document.body.innerText");
-            print("Body $tokenData");
-            print("Body type: ${jsonDecode(tokenData).runtimeType}");
+           if (Platform.isAndroid) {
+             dynamic token = jsonDecode(jsonDecode(tokenData));
+            await context.read<AuthRepository>().saveToken(token['npsso']);
+           } else if (Platform.isIOS) {
             dynamic token = jsonDecode(tokenData);
             await context.read<AuthRepository>().saveToken(token['npsso']);
+           }
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (routeContext) => GamesPage()));
           }

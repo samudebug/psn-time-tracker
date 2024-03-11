@@ -51,6 +51,7 @@ dependencies:
     path: ./repositories/trophies_repository
   auth_repository:
     path: ./repositories/auth_repository
+  webview_windows: ^0.4.0
 
 dev_dependencies:
   flutter_test:

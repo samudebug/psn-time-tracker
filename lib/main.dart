@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:api_repository/api_repository.dart';
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +12,11 @@ import 'package:psn_time_tracker/blocs/trophies_bloc/trophies_bloc.dart';
 import 'package:psn_time_tracker/blocs/trophy_groups_bloc/trophy_groups_bloc.dart';
 import 'package:psn_time_tracker/pages/games/games_page.dart';
 import 'package:psn_time_tracker/pages/login/login_page.dart';
+import 'package:psn_time_tracker/pages/login/login_page_desktop.dart';
 import 'package:trophies_repository/trophies_repository.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   APIRepository apiRepository = APIRepository();
   ProfileRepository profileRepository = ProfileRepository(apiRepository: apiRepository);
   GamesRepository gamesRepository = GamesRepository(apiRepository: apiRepository);
@@ -65,7 +69,7 @@ class MyApp extends StatelessWidget {
           
           useMaterial3: true,
         ),
-        home: LoginPage()),
+        home: Platform.isWindows ? LoginPageDesktop() : LoginPage()),
     ),
     );
   }
