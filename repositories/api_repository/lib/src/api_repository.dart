@@ -6,11 +6,11 @@ class APIError implements Exception {
 }
 
 class APIRepository {
-  APIRepository() : dio = Dio(BaseOptions(baseUrl: "https://psn-time-tracker-api.onrender.com"));
+  APIRepository() : dio = Dio(BaseOptions(baseUrl: "https://backend-u465rfcqhq-uc.a.run.app"));
   final Dio dio;
-  Future<dynamic> performGet(String url, Map<String, dynamic> params, {String? cookie}) async {
+  Future<dynamic> performGet({String? cookie, required String url, required Map<String, dynamic> headers, required Map<String, dynamic> params}) async {
     try {
-      final response = await dio.get(url, queryParameters: params, options: Options(headers: {'Cookie': cookie ?? ""}));
+      final response = await dio.get(url, queryParameters: params, options: Options(headers: headers));
       return response.data;
     } catch (e) {
       print(e);

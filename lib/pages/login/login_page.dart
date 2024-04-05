@@ -38,7 +38,6 @@ class LoginPage extends StatelessWidget {
                                                   window.location.assign("https://ca.account.sony.com/api/v1/ssocookie");
                                                 }
                                               document.cookie""");
-          print("Cookie $cookie");
           if (cookie.contains("isSignedIn=true;")) {
             controller.loadUrl("https://ca.account.sony.com/api/v1/ssocookie");
           } else {
@@ -56,7 +55,6 @@ class LoginPage extends StatelessWidget {
                                                   window.location.assign("https://ca.account.sony.com/api/v1/ssocookie");
                                                 }
                                               document.cookie""");
-          print("Cookie $cookie");
           if (cookie.contains("isSignedIn=true;")) {
             controller.loadUrl("https://ca.account.sony.com/api/v1/ssocookie");
           }
@@ -69,7 +67,6 @@ class LoginPage extends StatelessWidget {
                                                   window.location.assign("https://ca.account.sony.com/api/v1/ssocookie");
                                                 }
                                               document.cookie""");
-            print("Cookie $cookie");
             if (cookie.contains("isSignedIn=true;")) {
               controller
                   .loadUrl("https://ca.account.sony.com/api/v1/ssocookie");

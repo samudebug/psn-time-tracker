@@ -6,16 +6,29 @@ class TrophiesRepository {
   TrophiesRepository({required this.apiRepository});
   final APIRepository apiRepository;
 
-  Future<List<TrophyGroup>> getTrophyGroups(String titleId, String token) async {
-    Map<String, dynamic> data = await apiRepository.performGet("/get_trophy_groups/$titleId", {'token': token, 'language': 'pt-br'});
+  Future<List<TrophyGroup>> getTrophyGroups(
+      String titleId, String token) async {
+    Map<String, dynamic> data =
+        await apiRepository.performGet(url: "/games/$titleId", params: {
+      'language': 'pt-br'
+    }, headers: {
+      'Authorization': token,
+    });
     if (data.isEmpty) return [];
-    print("data $data");
-    final groups = data['groups'].map<TrophyGroup>((e) => TrophyGroup.fromJson(e) as TrophyGroup).toList();
+    final groups = data['groups']
+        .map<TrophyGroup>((e) => TrophyGroup.fromJson(e) as TrophyGroup)
+        .toList();
     return groups;
   }
 
-  Future<List<Trophy>> getTrophies(String titleId, String groupId, String token) async {
-    dynamic data = await apiRepository.performGet("/get_trophies/$titleId/$groupId", {'token': token, 'language': 'pt-br'});
+  Future<List<Trophy>> getTrophies(
+      String titleId, String groupId, String token) async {
+    dynamic data = await apiRepository
+        .performGet(url: "/games/$titleId/trophies/$groupId", params: {
+      'language': 'pt-br'
+    }, headers: {
+      'Authorization': token,
+    });
     final trophies = data.map<Trophy>((e) => Trophy.fromJson(e)).toList();
     return trophies;
   }

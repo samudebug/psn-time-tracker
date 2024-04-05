@@ -19,4 +19,8 @@ class AuthRepository {
     if (token == null) return "";
     return token;
   }
+
+  Future<void> clearToken() async {
+    await storage.delete(key: "ssoToken");
+  }
 }

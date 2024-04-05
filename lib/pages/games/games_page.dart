@@ -34,6 +34,8 @@ class GamesPage extends StatelessWidget {
       child: BlocListener<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileFailed) {
+            context.read<AuthRepository>().clearToken();
+
             if (Platform.isWindows) {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (routeContext) => LoginPageDesktop()));
@@ -48,23 +50,23 @@ class GamesPage extends StatelessWidget {
             return Scaffold(
                 appBar: state is ProfileReady
                     ? ProfileAppBar(profile: (state as ProfileReady).profile)
-                    : (ProfileAppBarLoading() as PreferredSizeWidget),
+                    : (const ProfileAppBarLoading() as PreferredSizeWidget),
                 body: BlocBuilder<GamesBloc, GamesState>(
                   builder: (context, gamesState) {
                     return OrientationBuilder(
                       builder: (context, orientation) => AnimatedSwitcher(
-                        key: Key("normal"),
-                        duration: Duration(milliseconds: 300),
+                        key: const Key("normal"),
+                        duration: const Duration(milliseconds: 300),
                         child: gamesState is GamesReady
                             ? GridView.builder(
-                                key: Key("loaded"),
+                                key: const Key("loaded"),
                                 itemCount: gamesState.games.length,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            orientation == Orientation.portrait
-                                                ? 1
-                                                : 4),
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 400.0,
+                                        mainAxisSpacing: 16.0,
+                                        crossAxisSpacing: 16.0,
+                                        mainAxisExtent: 400),
                                 itemBuilder: (context, index) {
                                   final Game game = gamesState.games[index];
                                   return GestureDetector(
@@ -80,15 +82,18 @@ class GamesPage extends StatelessWidget {
                                 },
                               )
                             : Shimmer.fromColors(
-                                key: Key("loading"),
+                                key: const Key("loading"),
+                                baseColor: Colors.grey.shade300,
+                                highlightColor: Colors.grey.shade100,
+                                enabled: true,
                                 child: GridView.builder(
                                     itemCount: 12,
                                     gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: orientation ==
-                                                    Orientation.portrait
-                                                ? 1
-                                                : 4),
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 400.0,
+                                        mainAxisSpacing: 16.0,
+                                        crossAxisSpacing: 16.0,
+                                        mainAxisExtent: 400),
                                     itemBuilder: ((context, index) => Container(
                                           width: double.infinity,
                                           height: 250.0,
@@ -99,9 +104,7 @@ class GamesPage extends StatelessWidget {
                                             color: Colors.white,
                                           ),
                                         ))),
-                                baseColor: Colors.grey.shade300,
-                                highlightColor: Colors.grey.shade100,
-                                enabled: true,
+                                
                               ),
                       ),
                     );
