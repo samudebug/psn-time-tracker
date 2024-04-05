@@ -63,7 +63,7 @@ class GamesPage extends StatelessWidget {
                                 itemCount: gamesState.games.length,
                                 gridDelegate:
                                     const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 400.0,
+                                        maxCrossAxisExtent: 600.0,
                                         mainAxisSpacing: 16.0,
                                         crossAxisSpacing: 16.0,
                                         mainAxisExtent: 400),
@@ -90,7 +90,7 @@ class GamesPage extends StatelessWidget {
                                     itemCount: 12,
                                     gridDelegate:
                                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 400.0,
+                                        maxCrossAxisExtent: 600.0,
                                         mainAxisSpacing: 16.0,
                                         crossAxisSpacing: 16.0,
                                         mainAxisExtent: 400),
